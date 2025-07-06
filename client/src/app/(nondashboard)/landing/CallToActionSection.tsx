@@ -1,11 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
 const CallToActionSection = () => {
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  if (!hasMounted) return null;
+
   return (
     <div className="relative py-24">
       <Image
@@ -13,6 +21,7 @@ const CallToActionSection = () => {
         alt="Rentiful Search Section Background"
         fill
         className="object-cover object-center"
+        priority
       />
       <div className="absolute inset-0 bg-black bg-opacity-60"></div>
       <motion.div

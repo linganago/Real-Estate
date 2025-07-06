@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
@@ -20,6 +20,14 @@ const itemVariants = {
 };
 
 const DiscoverSection = () => {
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  if (!hasMounted) return null;
+
   return (
     <motion.div
       initial="hidden"
@@ -43,6 +51,7 @@ const DiscoverSection = () => {
             your dream rental property!
           </p>
         </motion.div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 xl:gap-16 text-center">
           {[
             {

@@ -11,6 +11,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(true);
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   useEffect(() => {
     if (authUser) {
@@ -26,15 +31,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     }
   }, [authUser, router, pathname]);
 
-  if (authLoading || isLoading) return <>Loading...</>;
+  if (!hasMounted || authLoading || isLoading) return null;
 
   return (
     <div className="h-full w-full">
       <Navbar />
-      <main
-        className={`h-full flex w-full flex-col`}
-        style={{ paddingTop: `${NAVBAR_HEIGHT}px` }}
-      >
+      <main className="h-full flex w-full flex-col" style={{ paddingTop: `${NAVBAR_HEIGHT}px` }}>
         {children}
       </main>
     </div>
