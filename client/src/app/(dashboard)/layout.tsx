@@ -16,7 +16,7 @@ const DashboardContent = ({ children }: { children: React.ReactNode }) => {
       className="transition-all duration-300"
       style={{
         marginLeft: open ? 240 : 80, // match sidebar widths
-        paddingTop: NAVBAR_HEIGHT,
+        paddingTop: NAVBAR_HEIGHT + 16, // adds 16px spacing below the Navbar
         minHeight: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
       }}
     >
