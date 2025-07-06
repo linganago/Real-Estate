@@ -17,7 +17,7 @@ const CallToActionSection = () => {
   return (
     <div className="relative py-24">
       <Image
-        src="https://re-s3-project.s3.amazonaws.com/landing-call-to-action.jpg"
+        src="/landing-call-to-action.jpg"
         alt="Rentiful Search Section Background"
         fill
         className="object-cover object-center"

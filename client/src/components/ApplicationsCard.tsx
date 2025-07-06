@@ -33,7 +33,7 @@ const ApplicationCard = ({
             height={150}
             className="rounded-xl object-cover w-full lg:w-[200px] h-[150px]"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            onError={() => setImgSrc("https://re-s3-project.s3.amazonaws.com/placeholder.jpg")}
+            onError={() => setImgSrc("/placeholder.jpg")}
           />
           <div className="flex flex-col justify-between">
             <div>
@@ -96,7 +96,7 @@ const ApplicationCard = ({
           <div className="flex gap-4">
             <div>
               <Image
-                src="https://re-s3-project.s3.amazonaws.com/landing-i1.png"
+                src="/landing-i1.png"
                 alt={contactPerson.name}
                 width={40}
                 height={40}

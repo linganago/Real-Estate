@@ -50,7 +50,7 @@ const FeaturesSection = () => {
           {[0, 1, 2].map((index) => (
             <motion.div key={index} variants={itemVariants}>
               <FeatureCard
-                imageSrc={`https://re-s3-project.s3.amazonaws.com/landing-search${3 - index}.png`}
+                imageSrc={`/landing-search${3 - index}.png`}
                 title={
                   [
                     "Trustworthy and Verified Listings",
