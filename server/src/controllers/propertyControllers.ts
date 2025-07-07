@@ -5,6 +5,7 @@ import { S3Client } from "@aws-sdk/client-s3";
 import { Location } from "@prisma/client";
 import { Upload } from "@aws-sdk/lib-storage";
 import axios from "axios";
+import type { Point } from "geojson"; // ✅ fix: import Point type
 
 const prisma = new PrismaClient();
 
@@ -105,7 +106,7 @@ export const getProperties = async (
       const lat = parseFloat(latitude as string);
       const lng = parseFloat(longitude as string);
       const radiusInKilometers = 1000;
-      const degrees = radiusInKilometers / 111; // Converts kilometers to degrees
+      const degrees = radiusInKilometers / 111;
 
       whereConditions.push(
         Prisma.sql`ST_DWithin(
@@ -167,9 +168,8 @@ export const getProperty = async (
       const coordinates: { coordinates: string }[] =
         await prisma.$queryRaw`SELECT ST_asText(coordinates) as coordinates from "Location" where id = ${property.location.id}`;
 
-      const geoJSON: any = wktToGeoJSON(coordinates[0]?.coordinates || "");
-      const longitude = geoJSON.coordinates[0];
-      const latitude = geoJSON.coordinates[1];
+      const geoJSON = wktToGeoJSON(coordinates[0]?.coordinates || "") as Point;
+      const [longitude, latitude] = geoJSON.coordinates;
 
       const propertyWithCoordinates = {
         ...property,
@@ -247,14 +247,12 @@ export const createProperty = async (
           ]
         : [0, 0];
 
-    // create location
     const [location] = await prisma.$queryRaw<Location[]>`
       INSERT INTO "Location" (address, city, state, country, "postalCode", coordinates)
       VALUES (${address}, ${city}, ${state}, ${country}, ${postalCode}, ST_SetSRID(ST_MakePoint(${longitude}, ${latitude}), 4326))
       RETURNING id, address, city, state, country, "postalCode", ST_AsText(coordinates) as coordinates;
     `;
 
-    // create property
     const newProperty = await prisma.property.create({
       data: {
         ...propertyData,
