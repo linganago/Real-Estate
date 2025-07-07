@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -13,11 +13,6 @@ const HeroSection = () => {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
-  const [hasMounted, setHasMounted] = useState(false);
-
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
 
   const handleLocationSearch = async () => {
     try {
@@ -43,7 +38,7 @@ const HeroSection = () => {
         const params = new URLSearchParams({
           location: trimmedQuery,
           lat: lat.toString(),
-          lng: lng.toString(),
+          lng: lng,
         });
         router.push(`/search?${params.toString()}`);
       }
@@ -52,12 +47,10 @@ const HeroSection = () => {
     }
   };
 
-  if (!hasMounted) return null;
-
   return (
     <div className="relative h-screen">
       <Image
-        src="https://re-s3-project.s3.amazonaws.com/landing-splash.jpg"
+        src="/landing-splash.jpg"
         alt="Rentiful Rental Platform Hero Section"
         fill
         className="object-cover object-center"

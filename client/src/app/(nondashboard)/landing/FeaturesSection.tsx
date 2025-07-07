@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,14 +23,6 @@ const itemVariants = {
 };
 
 const FeaturesSection = () => {
-  const [hasMounted, setHasMounted] = useState(false);
-
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
-
-  if (!hasMounted) return null;
-
   return (
     <motion.div
       initial="hidden"
@@ -50,7 +42,7 @@ const FeaturesSection = () => {
           {[0, 1, 2].map((index) => (
             <motion.div key={index} variants={itemVariants}>
               <FeatureCard
-                imageSrc={`https://re-s3-project.s3.amazonaws.com/landing-search${3 - index}.png`}
+                imageSrc={`/landing-search${3 - index}.png`}
                 title={
                   [
                     "Trustworthy and Verified Listings",
