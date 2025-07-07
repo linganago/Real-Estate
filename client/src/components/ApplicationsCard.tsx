@@ -8,7 +8,7 @@ const ApplicationCard = ({
   children,
 }: ApplicationCardProps) => {
   const [imgSrc, setImgSrc] = useState(
-    application.property.photoUrls?.[0] || "/placeholder.jpg"
+    application.property.photoUrls?.[0] || "https://re-s3-project.s3.amazonaws.com/placeholder.jpg"
   );
 
   const statusColor =
@@ -96,7 +96,7 @@ const ApplicationCard = ({
           <div className="flex gap-4">
             <div>
               <Image
-                src="/landing-i1.png"
+                src="https://re-s3-project.s3.amazonaws.com/landing-i1.png"
                 alt={contactPerson.name}
                 width={40}
                 height={40}

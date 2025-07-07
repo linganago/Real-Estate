@@ -11,7 +11,7 @@ const CardCompact = ({
   propertyLink,
 }: CardCompactProps) => {
   const [imgSrc, setImgSrc] = useState(
-    property.photoUrls?.[0] || "/placeholder.jpg"
+    property.photoUrls?.[0] || "https://re-s3-project.s3.amazonaws.com/placeholder.jpg"
   );
 
   return (
@@ -23,7 +23,7 @@ const CardCompact = ({
           fill
           className="object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          onError={() => setImgSrc("/placeholder.jpg")}
+          onError={() => setImgSrc("https://re-s3-project.s3.amazonaws.com/placeholder.jpg")}
         />
         <div className="absolute bottom-2 left-2 flex gap-1 flex-col">
           {property.isPetsAllowed && (

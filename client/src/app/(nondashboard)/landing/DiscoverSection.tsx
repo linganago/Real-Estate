@@ -55,19 +55,19 @@ const DiscoverSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 xl:gap-16 text-center">
           {[
             {
-              imageSrc: "/landing-icon-wand.png",
+              imageSrc: "https://re-s3-project.s3.amazonaws.com/landing-icon-wand.png",
               title: "Search for Properties",
               description:
                 "Browse through our extensive collection of rental properties in your desired location.",
             },
             {
-              imageSrc: "/landing-icon-calendar.png",
+              imageSrc: "https://re-s3-project.s3.amazonaws.com/landing-icon-calendar.png",
               title: "Book Your Rental",
               description:
                 "Once you've found the perfect rental property, easily book it online with just a few clicks.",
             },
             {
-              imageSrc: "/landing-icon-heart.png",
+              imageSrc: "https://re-s3-project.s3.amazonaws.com/landing-icon-heart.png",
               title: "Enjoy your New Home",
               description:
                 "Move into your new rental property and start enjoying your dream home.",
