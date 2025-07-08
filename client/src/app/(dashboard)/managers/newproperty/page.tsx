@@ -7,7 +7,7 @@ import { PropertyFormData, propertySchema } from "@/lib/schemas";
 import { useCreatePropertyMutation, useGetAuthUserQuery } from "@/state/api";
 import { AmenityEnum, HighlightEnum, PropertyTypeEnum } from "@/lib/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 
@@ -39,23 +39,26 @@ const NewProperty = () => {
     },
   });
 
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+
   const onSubmit = async (data: PropertyFormData) => {
     if (!authUser?.cognitoInfo?.userId) {
       throw new Error("No manager ID found");
     }
 
     const formData = new FormData();
+
     Object.entries(data).forEach(([key, value]) => {
-      if (key === "photoUrls") {
-        const files = value as File[];
-        files.forEach((file: File) => {
-          formData.append("photos", file);
-        });
-      } else if (Array.isArray(value)) {
+      if (key === "photoUrls") return; // skip, handled below
+      if (Array.isArray(value)) {
         formData.append(key, JSON.stringify(value));
       } else {
         formData.append(key, String(value));
       }
+    });
+
+    imageFiles.forEach((file) => {
+      formData.append("photos", file); // backend must handle 'photos'
     });
 
     formData.append("managerCognitoId", authUser.cognitoInfo.userId);
@@ -75,7 +78,6 @@ const NewProperty = () => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="p-4 space-y-10"
           >
-            {/* Basic Information */}
             <div>
               <h2 className="text-lg font-semibold mb-4">Basic Information</h2>
               <div className="space-y-4">
@@ -90,7 +92,6 @@ const NewProperty = () => {
 
             <hr className="my-6 border-gray-200" />
 
-            {/* Fees */}
             <div className="space-y-6">
               <h2 className="text-lg font-semibold mb-4">Fees</h2>
               <CustomFormField
@@ -114,7 +115,6 @@ const NewProperty = () => {
 
             <hr className="my-6 border-gray-200" />
 
-            {/* Property Details */}
             <div className="space-y-6">
               <h2 className="text-lg font-semibold mb-4">Property Details</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -161,7 +161,6 @@ const NewProperty = () => {
 
             <hr className="my-6 border-gray-200" />
 
-            {/* Amenities and Highlights */}
             <div>
               <h2 className="text-lg font-semibold mb-4">
                 Amenities and Highlights
@@ -190,20 +189,20 @@ const NewProperty = () => {
 
             <hr className="my-6 border-gray-200" />
 
-            {/* Photos */}
             <div>
               <h2 className="text-lg font-semibold mb-4">Photos</h2>
-              <CustomFormField
-                name="photoUrls"
-                label="Property Photos"
+              <input
                 type="file"
                 accept="image/*"
+                multiple
+                onChange={(e) =>
+                  setImageFiles(Array.from(e.target.files || []))
+                }
               />
             </div>
 
             <hr className="my-6 border-gray-200" />
 
-            {/* Additional Information */}
             <div className="space-y-6">
               <h2 className="text-lg font-semibold mb-4">
                 Additional Information
@@ -225,11 +224,7 @@ const NewProperty = () => {
               <CustomFormField name="country" label="Country" />
             </div>
 
-            <Button
-              
-              type="submit"
-              className="bg-primary-700 text-white w-full mt-8"
-            >
+            <Button type="submit" className="bg-primary-700 text-white w-full mt-8">
               Create Property
             </Button>
           </form>
@@ -239,4 +234,4 @@ const NewProperty = () => {
   );
 };
 
-export default NewProperty;
+export default NewProperty; 
